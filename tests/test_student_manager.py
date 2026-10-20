@@ -87,3 +87,34 @@ def test_edit_student(page: Page):
     )
     expect(page.locator("#studentRows")).to_contain_text("95/100")
     expect(page.locator("#totalCount")).to_have_text("3")
+
+def test_debug_javascript(page: Page):
+    page_errors = []
+    failed_requests = []
+
+    page.on("pageerror", lambda error: page_errors.append(str(error)))
+    page.on(
+        "requestfailed",
+        lambda request: failed_requests.append(
+            f"{request.url}: {request.failure}"
+        ),
+    )
+
+    html_file = Path(__file__).resolve().parent.parent / "index.html"
+    page.goto(html_file.as_uri())
+
+    print("Page URL:", page.url)
+    print("JavaScript errors:", page_errors)
+    print("Failed requests:", failed_requests)
+    print(
+        "Script loaded:",
+        page.locator("script[src='scripts.js']").count(),
+    )
+    print(
+        "Rendered student rows:",
+        page.locator("#studentRows tr").count(),
+    )
+
+    assert not page_errors, f"JavaScript errors: {page_errors}"
+    assert page.locator("#studentRows tr").count() == 3
+
