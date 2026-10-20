@@ -22,3 +22,6 @@ check:
     -name: Check Js syntax
     run: node --check script.js
 
+    -name: Run test
+    run: node tests.js
+
