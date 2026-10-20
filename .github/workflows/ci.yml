@@ -7,21 +7,21 @@ on:
     branches: [main]
 
 jobs:
-check:
-  runs-on: ubuntu-latest
+  check:
+    runs-on: ubuntu-latest
 
-  steps:
-    -name: Download repo code
-    uses: actions/checkout@v4
+    steps:
+      - name: Download repo code
+        uses: actions/checkout@v4
 
-    -name: setup Node.js
-    uses: actions/step-node@v4
-    with:
-      node-version: 22
+      - name: setup Node.js
+        uses: actions/setup-node@v4
+        with:
+            node-version: 22
 
-    -name: Check Js syntax
-    run: node --check script.js
+      - name: Check Js syntax
+        run: node --check scripts.js
 
-    -name: Run test
-    run: node tests.js
+      - name: Run test
+        run: node tests.js
 
