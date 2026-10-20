@@ -28,5 +28,8 @@ jobs:
       - name: Install Playwright Chromium
         run: python -m playwright install --with-deps chromium
 
+      - name: Verify JavaScript syntax
+        run: node --check scripts.js
+
       - name: Run browser tests
         run: python -m pytest tests/test_student_manager.py -v
